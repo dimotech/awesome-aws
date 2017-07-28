@@ -1,0 +1,120 @@
+extends layout
+block content
+	include ./header.jade
+		include ./breadcrumb.jade
+		h1.comparedTitle Compared Results
+		.ui.grid.four.column.wide.comparedResult
+			each vehicle in comparedVins
+				.column
+					div						
+						div.vehicleTitle
+							p.title #{vehicle.type} #{vehicle.year} #{vehicle.make} #{vehicle.model} #{vehicle.trim}    
+						div.vehicleImg
+							img(src="/images/sample.png")
+						div.vehiclePrice
+							p.title Price Overview
+								div.msrp
+									span.category MSRP:
+									span.data $#{vehicle.msrp}
+								div.savings
+									span.category Savings:
+									span.data -$#{vehicle.msrp - vehicle.sellingprice}							
+								div.sellingprice
+									span.category Your Price:
+									span.data $#{vehicle.sellingprice}							
+						div.vehicleBasic
+							p Basic Imformation
+							div.data
+								span.category Body
+								span.detail #{vehicle.bodystyle}
+							div.data
+								span.category Engine
+								span.detail #{vehicle.engine}
+							div.data
+								span.category Fuel Type
+								span.detail #{vehicle.fueltype}
+							div.data
+								span.category MPG
+								span.detail #{vehicle.citympg}-city/#{vehicle.highwaympg}-hwy
+							div.data
+								span.category Transmission
+								span.detail #{vehicle.transmission}
+							div.data
+								span.category Drivertrain
+								span.detail #{vehicle.drivertrain}
+							div.data
+								span.category Door
+								span.detail 4
+							div.data
+								span.category Exterior Color
+								span.detail #{vehicle.externalcolor}
+							div.data
+								span.category Interior Color
+								span.detail #{vehicle.internalcolor}
+						div.vehicleFeatures
+							p Hightlighted Features
+							div
+								div.ui.grid.two.column
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox 
+												img(src="/images/vdp/leather.png")
+											div.column.item
+												span Leather
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/bluetooth.png")
+											div.column.item
+												span Bluetooth
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/keyless.png")
+											div.column.item
+												span Keyless Entry
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/sunroof.png")
+											div.column.item
+												span Sunroof
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/parkingsensor.png")
+											div.column.item
+												span Parking Sensor
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/navigation.png")
+											div.column.item
+												span Navigation
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/aux.png")
+											div.column.item
+												span Aux
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/premierwheel.png")
+											div.column.item
+												span Premier Wheel												
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/turbo.png")
+											div.column.item
+												span Turbo
+						hr.divider						
+						div.center
+							div.ui.button.yellow.bestprice Get Our Best Price
+						div.center
+							div.ui.inverted.blue.button.testdrive Schedule Test Drive
+						div.center
+							a.ui.inverted.blue.button.details(href="/vdp/#{vehicle.vin}") View Details
+			br
+		include ./footer.jade

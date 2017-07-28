@@ -1,0 +1,49 @@
+extends layout
+block content
+	include ./header.jade
+		if loginstatus == true
+			br
+			.dealerdata
+				h1 Your Vehicles Data Quick View
+				table.ui.celled.padded.selectable.sortable.table
+					thead
+						tr
+							th.single.line Vin
+							th Type
+							th Year
+							th Make
+							th Model
+							th Trim
+							th MSRP
+							th Selling Price
+							th Internet Price
+							th Data Manipulation
+					tbody
+						each vehicle in vehicles
+							tr
+								td.vin 
+									span #{vehicle.vin}
+								td.type 
+									span #{vehicle.type}
+								td.year 
+									span #{vehicle.year}
+								td.make 
+									span #{vehicle.make}
+								td.model 
+									span #{vehicle.model}
+								td.trim 
+									span #{vehicle.trim}
+								td.msrp 
+									span $#{vehicle.msrp}
+								td.sellingprice 
+									span $#{vehicle.sellingprice}
+								td.internetprice 
+									span $#{vehicle.internetprice}
+								td.manipulation
+									a.ui.button.green.update Update
+									a.ui.button.red.delete Delete
+		else 
+			br
+			.dealerdata
+				h1 You Don't Have Permission to View This Page! 	
+		include ./footer.jade

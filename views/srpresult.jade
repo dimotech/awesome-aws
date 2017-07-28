@@ -1,0 +1,44 @@
+block content
+	div.ui.special.cards
+		each vehicle in srp
+			div.card
+				div.blurring.dimmable.image
+					div.ui.dimmer
+						div.content
+							div.center
+								i.empty.heart.icon.position
+								div.ui.yellow.button.bpButton Get Best Price
+								br
+								a(href="/vdp/#{vehicle.vin}")
+									div.ui.inverted.button.detailsButton View Details 
+					img(src="/images/sample.png")
+					i.empty.heart.icon.position(id="#{vehicle.vin}")
+				div.content
+					a.header.srpHeaderFont(href="/vdp/#{vehicle.vin}") #{vehicle.type} #{vehicle.year} #{vehicle.make} #{vehicle.model} #{vehicle.bodystyle}
+						span.srpHeaderView
+							i.unhide.icon
+							| 44
+					div.meta
+						span.srpHeaderDetails #{vehicle.mileage} Miles
+						span |
+						span.srpHeaderDetails #{vehicle.citympg}/#{vehicle.highwaympg} MPG
+						span |
+						span.srpHeaderDetails #{vehicle.drivertrain} 
+				div.extra.content
+					span MSRP
+						span.srpHeaderDetails &nbsp;
+							strike $#{vehicle.msrp}&nbsp;&nbsp;
+					span 
+						span.srpHeaderSellingprice
+							$#{vehicle.sellingprice}
+	if loadmoreFlag == 1
+		.loadmoreInfo
+			br
+			center
+				a.ui.inverted.button.blue.loadmore Clike Me to Load More
+	else
+		.loadmoreInfo 
+			br
+			center
+				p &nbsp;	
+	br

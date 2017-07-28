@@ -1,0 +1,379 @@
+block content
+	div.pageFooter
+		div.ui.grid
+			div.ui.column.eight.wide
+				p.pageFooterDealerName Awesome Honda
+				span.pageFooterAddress 
+					i.marker.icon
+					| 1545 Amherst Ave, Los Angelse, CA 90025
+			div.ui.column.eight.wide
+				div.socialIcon
+					button.ui.circular.facebook.icon.button
+						i.facebook.icon
+					button.ui.circular.twitter.icon.button
+						i.twitter.icon
+					button.ui.circular.linkedin.icon.button
+						i.linkedin.icon
+					button.ui.circular.google.plus.icon.button
+						i.google.plus.icon			
+			hr																
+			div.ui.column.sixteen.wide.pageFooterCenter
+				div.pageFooterDisclaimer
+					ul
+						li.privacy 
+							| Privacy Policy
+						li.disclaimer
+							| Disclaimer
+						li.sitemap
+							| Sitemap
+						li.spanish
+							| En Español
+			div.ui.column.sixteen.wide.pageFooterCenter
+				div.pageFooterIntro
+					p &copy; 2016 Awesome Team
+					p Awesome Responsive Website Designed By Awesome Team
+	.ui.modal.bestpricemodalcontent
+		.header 
+			h1 Welcome to Awesome Honda
+			h2 Get Your Best Price Now
+		.hint
+			p. 
+				To ensure our customers have one of the best possible experiences, we display today's best price immediately after submitting the form below.
+		div.ui.grid.two.column.details
+			div.column.img
+			div.column.form
+				form.ui.form
+					h4 Contact Infomation
+					div.ui.grid.two.column
+						div.column.info
+							.field
+								label.required *Required
+								.ui.left.icon.input.username
+									input(type="text",placeholder="First Name")
+									i.user.outline.icon								 
+						div.column.info
+							.field
+								label.required *Required
+								.ui.left.icon.input.username
+									input(type="text",placeholder="Last Name")
+									i.user.outline.icon
+						div.column.info
+							.field
+								label.required *Required
+								.ui.left.icon.input.email
+									input(type="text",placeholder="Email Address")
+									i.mail.outline.icon								 
+						div.column.info
+							.field
+								label.required *Required
+								.ui.left.icon.input.phone
+									input(type="text",placeholder="Cell Phone")
+									i.phone.outline.icon
+						div.column.info.prefered
+							.field
+								label.required *Required
+								select.ui.dropdown
+									option(value="") Preferred Contact
+									option(value="text") Text
+									option(value="call") Call
+									option(value="email") Email
+						div.column.info.submit
+							.field
+								a.ui.button.inverted Submit Request
+		.actions
+			.ui.button.hidebpmodal Cancel											
+	script.
+		checkUserCookie("visitor");
+		cookieCount();
+		function cookieCount() {
+			if (checkloginstatus == true) {
+				getSaveVehicles();
+			} else {
+				var vins = getCookie("comparedVin").split("|");
+				if(vins[0] == "") {
+					$("span.vehiclesCount").html("");
+				} else {
+					$("<span class='countBg'>"+vins.length+"</span>").appendTo("span.vehiclesCount");
+				}
+			}
+		}				
+		$("a.item.save").on("click",function(){
+			$('.ui.sidebar')
+				.sidebar('setting', 'transition', 'push')
+				.sidebar({
+				    onShow: function() {
+				    	$(this).sidebar('show')
+				    }					
+				})				
+				.sidebar('toggle')
+			;
+			getSavedVechiles();
+		})
+		function removeReload() {
+			$('.sidebar.compared i.removeIcon:not(.bound)').addClass('bound').on('click', onRemovedVehicles);
+		}
+		function onRemovedVehicles() {
+			$(this).parent().parent().remove();
+		}
+		function getSavedVechiles() {
+			if (checkloginstatus == false) {
+				var vins = getCookie("comparedVin").split("|");
+				var titles = getCookie("comparedTitle").split("|");
+				//var paths = getCookie("comparedImgPath").split("|");
+				var html = "";
+				if(vins.length == 1 && vins[0] == "") {
+
+				} else {
+					for (var i = 0; i < vins.length; i++) {
+						var headerTitle = titles[i].split("*")[1];
+						var vin = vins[i];
+						//var imgPath = paths][i].split("*")[1];
+						var url = "/vdp/"+vins[i];
+						html += "<div class='item'>";
+						html += "<div id='"+vin+"'><i class='remove icon removeIcon'></i>";
+						html += "<p>"+headerTitle+"</p>";
+						html += "<div class='ui checkbox compare'><input type='checkbox' class='compare' value='"+vin+"'></input><label> </label></div><a href='"+url+"'><img src='/images/sample.png'></a></div></div>";
+					}
+					$(".ui.sidebar.compared .results").html(html);
+					reloadDelete();					
+				}								
+			} else {
+				$.ajax({
+					type: 'POST',
+					url: "../getsavedvehicles",
+					success: function(msg) {	
+						var html = "";
+						for (var i = 0; i < msg.length; i++) {
+							var headerTitle = msg[i].type+" "+msg[i].year+" "+msg[i].make+" "+msg[i].model+" "+msg[i].trim;
+							var url = "/vdp/"+msg[i].vin;
+							html += "<div class='item'>";
+							html += "<div id='"+msg[i].vin+"'><i class='remove icon removeIcon'></i>";
+							html += "<p>"+headerTitle+"</p>";
+							html += "<div class='ui checkbox compare'><input type='checkbox' class='compare' value='"+msg[i].vin+"'></input><label> </label></div><a href='"+url+"'><img src='/images/sample.png'></a></div></div>";
+						}
+						$(".ui.sidebar.compared .results").html(html);
+						reloadDelete();
+					}
+				})
+			}		
+		}
+		function reloadDelete() {
+			$('i.remove.icon.removeIcon').on('click', onDeleteClickedIcon);
+			function onDeleteClickedIcon() {
+				var vin = $(this).parent().attr('id');
+				console.log("vin: "+vin);
+				if (checkloginstatus == false) {
+					var vins = getCookie("comparedVin").split("|");
+					var titles = getCookie("comparedTitle").split("|");
+					function reconsVins(vins, vin) {
+						var newVins = "";
+						var vlength = vins.length;
+						for (var i = 0; i < vlength; i++) {
+							if (vins[i].indexOf(vin) > -1) {
+							
+							} else {
+								if (newVins == "") {
+									newVins += vins[i];
+								} else {
+									newVins += "|" + vins[i];
+								}
+							}
+						}
+						return newVins;
+					}
+					console.log(reconsVins(vins,vin));
+					function reconsTitles(titles, vin) {
+						var newTitles = "";
+						var tlength = titles.length;
+						for (var j = 0; j < tlength; j++) {
+							if (titles[j].indexOf(vin) > -1) {
+							
+							} else {
+								if (newTitles == "") {
+									newTitles += titles[j];
+								} else {
+									newTitles += "|" + titles[j];
+								}
+							}
+						}
+						return newTitles;
+					}
+					console.log(reconsTitles(titles,vin));
+					$.when(removeCookies("comparedVin")).then(setCookie("comparedVin", reconsVins(vins,vin), 30));
+					$.when(removeCookies("comparedTitle")).then(setCookie("comparedTitle", reconsTitles(titles,vin), 30));
+					$(".ui.sidebar.compared #"+vin).parent().remove();
+					getSaveVehicles();					
+				} else {
+					$.ajax({
+					    dataType: 'json',
+					    type: 'POST',
+					    url: "../delete/"+vin,
+						beforeSend: function() {
+
+						},			    
+					    success: function(msg) {	
+					    	$(".ui.sidebar.compared #"+vin).parent().remove();
+					    	getSaveVehicles();
+					    }
+					})
+				}			
+			}
+		}		
+		function setCookie(cname,cvalue,exdays) {
+		    var d = new Date();
+		    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+		    var expires = "expires=" + d.toGMTString();
+		    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		}
+
+		function getCookie(cname) {
+		    var name = cname + "=";
+		    var ca = document.cookie.split(';');
+		    for(var i = 0; i < ca.length; i++) {
+		        var c = ca[i];
+		        while (c.charAt(0) == ' ') {
+		            c = c.substring(1);
+		        }
+		        if (c.indexOf(name) == 0) {
+		            return c.substring(name.length, c.length);
+		        }
+		    }
+		    return "";
+		}
+		function removeCookies(name){
+			var result = document.cookie;
+			var cookieArray = result.split(";");
+			for(var i=0;i<cookieArray.length;i++){
+				var keyValArr = cookieArray[i].split("=");
+				if (keyValArr[0].trim() == name) {
+					console.log(keyValArr[0].trim());
+					document.cookie=keyValArr[0]+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+				}
+			}
+		}		
+		function checkUserCookie(title) {
+		    var user = getCookie("userX");
+		    if (user != "") {
+		        user = user + ";" + title;
+		        setCookie("userX", user, 30);
+		    } else {
+		        setCookie("userX", title, 30);
+		       	//console.log(getCookie("userX"));
+		    }
+		}
+		function checkTitleCookie(title) {
+		    var titles = getCookie("comparedTitle");
+		    if (titles != "") {
+		    	console.log(titles);
+		    	if(titles.indexOf(title) > -1) {
+
+		    	} else {
+		    		$.when(removeCookies("comparedTitle")).then(setCookie("comparedTitle", titles+"|"+title, 30));
+		    	}
+		    } else {
+		        setCookie("comparedTitle", title, 30);
+		    }
+		}
+		function checkVinCookie(vin) {
+		    var vins = getCookie("comparedVin");
+		    if (vins != "") {
+		    	if(vins.indexOf(vin) > -1) {
+
+		    	} else {
+		    		$.when(removeCookies("comparedVin")).then(setCookie("comparedVin", vins+"|"+vin, 30));
+		    	}
+		    } else {
+		        setCookie("comparedVin", vin, 30);
+		    }
+		}
+		function checkImgPathCookie(imgPath) {
+		    var imgPaths = getCookie("comparedImgPath");
+		    if (imgPaths != "") {
+		    	console.log(imgPaths);
+		    	if(imgPaths.indexOf(imgPath) > -1) {
+
+		    	} else {
+		    		$.when(removeCookies("comparedImgPath")).then(setCookie("comparedImgPath", imgPaths+"|"+imgPath, 30));
+		    	}
+		    } else {
+		        setCookie("comparedImgPath", imgPath, 30);
+		    }
+		}
+		$(".gotocompare").on("click",function(){
+			gotoComparedPage();
+		})
+		function getComparedVins() {
+			var checkboxes = document.getElementsByClassName("compare");
+			var compareVins = "";
+			for (var i=0; i<checkboxes.length; i++) {
+				if (checkboxes[i].checked) {
+					if (compareVins.length == 0) {
+						compareVins += checkboxes[i].value;
+					} else {
+						compareVins += "|"+checkboxes[i].value;
+					}
+				}
+			}
+			return compareVins;
+		}
+		function gotoComparedPage() {
+			var vins = getComparedVins();
+			var oneFlag = vins.indexOf("|");
+			var moreFlag = vins.split("|");
+			if (vins == null || vins == "" | oneFlag < 0) {
+				$(".comparedmodalcontent .hint p").html("Please Choose At Least Two Vehicles To Compare!");
+				$('.ui.modal.comparedmodalcontent')
+					.modal('show')
+				;
+			} else if (moreFlag.length > 4) {
+				$(".comparedmodalcontent .hint p").html("Please Choose No More Than Four Vehicles To Comapre!");
+				$('.ui.modal.comparedmodalcontent')
+					.modal('show')
+				;
+			} else {
+				window.location.replace("/compared/"+getComparedVins());
+			}			
+		}
+		$(".bpButton").on("click",function(){
+			var parent = $(this).parent().parent().parent().parent().parent();
+			var header = parent.find(".srpHeaderFont")[0].innerHTML.split("<span")[0];
+			var vin = parent.find(".dimmable").children("i")[0].id;
+			var imgPath = parent.find(".dimmable").children("img")[0].currentSrc;
+			var html = "";
+			html += "<h4>Vehicle Infomation</h4>"
+			html += "<p>"+header+"</p>";
+			html += "<img src='"+imgPath+"'/>";
+			html += "<p>Vin: "+vin+"</p>";
+			$(".bestpricemodalcontent .img").html(html);
+			$('.ui.modal.bestpricemodalcontent')
+				.modal('show')
+			;			
+		})
+		$(".hidebpmodal").on("click",function(){
+			$('.ui.modal.bestpricemodalcontent')
+				.modal('hide')
+			;			
+		})
+		function getSaveVehicles() {
+			if (checkloginstatus == false) {
+				cookieCount();
+			} else {
+				$.ajax({
+					type: 'POST',
+					url: "../getsavevehicles",
+					success: function(msg) {
+						console.log("msg:"+msg);
+						if (msg == null || msg == "") {
+							$("span.vehiclesCount").html("");
+						} else {
+							var count = msg.split(",");
+							console.log("count:"+count);
+							if (count.length > 0) {
+								$("<span class='countBg'>"+count.length+"</span>").appendTo("span.vehiclesCount");
+							}
+						}
+					}
+				})
+			}	
+		}
+		$('table').tablesort();											

@@ -1,0 +1,379 @@
+extends layout
+block content
+	include ./header.jade
+		include ./breadcrumb.jade	
+		each details in vehicledetails
+			div.vdp-content
+				div.ui.grid
+					div.column.eleven.wide
+						div.ui.top.attached.tabular.menu.gallery
+							a.active.item(data-tab="first")
+								i.camera.retro.icon
+								span Photos
+							a.item(data-tab="second")
+								i.file.video.outline.icon 
+								span Video
+						div.ui.bottom.attached.active.tab.segment.photos(data-tab="first")
+							div#sync5.owl-carousel
+								div.item
+									img(src="/images/vdplarge.png")
+								div.item
+									img(src="/images/vdplarge.png")
+								div.item
+									img(src="/images/vdplarge.png")
+								div.item
+									img(src="/images/vdplarge.png")
+								div.item
+									img(src="/images/vdplarge.png")
+								div.item
+									img(src="/images/vdplarge.png")
+								div.item
+									img(src="/images/vdplarge.png")
+								div.item
+									img(src="/images/vdplarge.png")
+							div#sync6.owl-carousel
+								div.item
+									img(src="/images/vdpsmall.png")
+								div.item
+									img(src="/images/vdpsmall.png")
+								div.item
+									img(src="/images/vdpsmall.png")
+								div.item
+									img(src="/images/vdpsmall.png")
+								div.item
+									img(src="/images/vdpsmall.png")
+								div.item
+									img(src="/images/vdpsmall.png")
+								div.item
+									img(src="/images/vdpsmall.png")
+								div.item
+									img(src="/images/vdpsmall.png")
+							.vdpcustomNavigation
+								a.btn.prev
+									i.chevron.circle.left.icon
+								a.btn.next
+									i.chevron.circle.right.icon																
+						div.ui.bottom.attached.tab.segment(data-tab="second") Second
+
+						div.features
+							p.title Feature Highlights
+							div.ui.grid
+								div.ui.grid.three.column
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox 
+												img(src="/images/vdp/leather.png")
+											div.column.item
+												span Leather
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/bluetooth.png")
+											div.column.item
+												span Bluetooth
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/keyless.png")
+											div.column.item
+												span Keyless Entry
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/sunroof.png")
+											div.column.item
+												span Sunroof
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/parkingsensor.png")
+											div.column.item
+												span Parking Sensor
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/navigation.png")
+											div.column.item
+												span Navigation
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/aux.png")
+											div.column.item
+												span Aux
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/premierwheel.png")
+											div.column.item
+												span Premier Wheel												
+									div.column
+										div.ui.grid.two.column
+											div.column.iconbox
+												img(src="/images/vdp/turbo.png")
+											div.column.item
+												span Turbo
+						hr.divide
+						div.expect
+							p.title Experts Say
+								p.highlighted Pros
+								p.
+									Exceptional fuel economy compared to other crossovers; plenty of adult-sized room in both seating rows; more cargo capacity than most rivals; rear seatbacks fold flat at the tug of a lever; appealing roster of tech and safety features.
+								p.highlighted Cons
+								p.
+									No available engine upgrade; touchscreen interface can be unintuitive and lacks separate volume and tuning knobs; some interior materials look and feel cheap.
+						hr.divide
+						div.report
+							p.title History Report
+							div.ui.grid
+								div.ui.grid.two.column
+									div.column.reportbox
+										img(src="/images/vdp/carfax.png")
+									div.column.reportbox
+										img(src="/images/vdp/autocheck.png")
+						hr.divide
+						div.vdpdetails
+							p.title Detailed Specifications
+							div.ui.top.attached.tabular.menu
+								a.active.item(data-tab="first1")	Safety
+								a.item(data-tab="second2")	Confort
+								a.item(data-tab="third3")	Entertainment
+								a.item(data-tab="fourth4")	Performance
+							div.ui.bottom.attached.active.tab.segment(data-tab="first1") 
+								ul
+								li Airbag Occupancy Sensor
+								li Back-Up Camera
+								li Curtain 1st And 2nd Row Airbags
+								li VSA Electronic Stability Control (ESC)
+								li ABS And Driveline Traction Control
+								li Dual Stage Driver And Passenger Seat-Mounted Side Airbags
+								li Side Impact Beams
+								li Outboard Front Lap And Shoulder Safety Belts -inc: Height Adjusters and Pretensioners
+								li Low Tire Pressure Warning
+								li Dual Stage Driver And Passenger Front Airbags
+							div.ui.bottom.attached.tab.segment(data-tab="second2") 2
+							div.ui.bottom.attached.tab.segment(data-tab="third3") 3
+							div.ui.bottom.attached.tab.segment(data-tab="fourth4") 4
+						hr.divide
+						div.interests
+							p.title You May Also Interested In
+							div.recommend
+					br		
+					div.column.five.wide
+						h1.title #{details.type} #{details.year} #{details.make} #{details.model} #{details.trim}
+						p.subsitle VIN: #{details.vin} | Stock: #{details.stock}
+						br
+						p.price
+							span.msrp MSRP: $#{details.msrp}
+							span.sellingprice Our Price: 
+								span.sellingpricenumber $#{details.sellingprice}
+						div.save
+							span.words You Save: $#{+details.msrp-details.sellingprice}
+						p.hint
+							- var today = new Date();
+							- var day = today.getDate();
+							- var month = today.getMonth() + 1;
+							- var year = today.getFullYear();
+							- var formattedDate = month+"/"+day+"/"+year
+							Only #{similar} #{details.model} #{details.trim} Models Left! #{formattedDate}
+						a.call(href="tel:(213) 308-9239")
+							p Call Now to Reserve This Vehicle (213) 308-9239
+						div.details
+							div.data
+								span.category Body
+								span.detail #{details.bodystyle}
+							div.data
+								span.category Engine
+								span.detail #{details.engine}
+							div.data
+								span.category Fuel Type
+								span.detail #{details.fueltype}
+							div.data
+								span.category MPG
+								span.detail #{details.citympg}-city/#{details.highwaympg}-hwy
+							div.data
+								span.category Transmission
+								span.detail #{details.transmission}
+							div.data
+								span.category Drivertrain
+								span.detail #{details.drivertrain}
+							div.data
+								span.category Door
+								span.detail 4
+							div.data
+								span.category Exterior Color
+								span.detail #{details.externalcolor}
+							div.data
+								span.category Interior Color
+								span.detail #{details.internalcolor}
+							div.center
+								div.ui.button.bestprice Get Our Best Price
+							div.center
+								div.ui.inverted.blue.button.testdrive Schedule Test Drive
+						div.ui.grid.shoppingtools
+							p.title Shopping Tools
+							div
+								div.ui.grid.three.column
+									div.column
+										p.img
+											img(src="/images/value your trade.png")
+										p.item Value Your Trade
+									div.column
+										p.img
+											img(src="/images/financing application.png")
+										p.item Finance Application
+									div.column
+										p.img
+											img(src="/images/schedule service.png")
+										p.item Schedule Service
+									div.column
+										p.img
+											img(src="/images/payment caculator.png")
+										p.item Payment Calculator
+									div.column
+										p.img
+											img(src="/images/learn warranties.png")
+										p.item Learn Warranties
+		div.vdpdisclaimer
+			include ./disclaimer.jade
+		br										
+		include ./footer.jade
+	script.
+		$('.menu .item')
+		  .tab()
+		;
+		$(document).ready(function() {	
+			var sync5 = $("#sync5");
+			var sync6 = $("#sync6");
+			sync5.owlCarousel({
+				touchDrag:true,
+				mouseDrag:true,			
+				singleItem:true,
+				slideSpeed:1000,
+				navigation:true,
+				pagination:false,
+				afterAction:syncPosition,
+				responsiveRefreshRate: 200,
+				autoPlay:3000,
+			});
+			sync6.owlCarousel({
+				items:6,
+				itemsDesktop: [1199,10],
+				itemsDesktopSmall: [979,10],
+				itemsTablet: [768,8],
+				itemsMobile: [479,4],
+				pagination:false,
+				responsiveRefreshRate: 100,
+				afterInit: function(el){
+					el.find(".owl-item").eq(0).addClass("synced");
+				}
+			});
+ 
+			function syncPosition(el){
+				var current = this.currentItem;
+				$("#sync6").find(".owl-item").removeClass("synced").eq(current).addClass("synced")
+				if($("#sync6").data("owlCarousel") !== undefined){
+					center(current)
+				}
+			}
+
+			$("#sync6").on("click", ".owl-item", function(e){
+				e.preventDefault();
+				var number = $(this).data("owlItem");
+				sync5.trigger("owl.goTo",number);
+			});
+
+			function center(number){
+				var sync6visible = sync6.data("owlCarousel").owl.visibleItems;
+				var num = number;
+				var found = false;
+				for(var i in sync6visible){
+					if(num === sync6visible[i]){
+						var found = true;
+					}
+				}
+
+				if(found===false){
+					if(num>sync6visible[sync6visible.length-1]){
+						sync6.trigger("owl.goTo", num - sync6visible.length+2)
+					}else{
+						if(num - 1 === -1){
+							num = 0;
+						}
+						sync6.trigger("owl.goTo", num);
+					}
+				} else if(num === sync6visible[sync6visible.length-1]){
+					sync6.trigger("owl.goTo", sync6visible[1])
+				} else if(num === sync6visible[0]){
+					sync6.trigger("owl.goTo", num-1)
+				}
+			}
+			$(".next").click(function(){
+				sync5.trigger('owl.next');
+			})
+			$(".prev").click(function(){
+				sync5.trigger('owl.prev');
+			})
+			$(".play").click(function(){
+				sync5.trigger('owl.play',1000); //owl.play event accept autoPlay speed as second parameter
+			})
+			$(".stop").click(function(){
+				sync5.trigger('owl.stop');
+			})
+
+			var currentpath = window.location.pathname;
+			var cut = currentpath.split("/");	
+			$.ajax({
+			    dataType: 'json',
+			    type: 'POST',
+			    url: "../similar/"+cut[2],
+				beforeSend: function() {
+
+				},			    
+			    success: function(msg) {	
+			    	var html = '';
+			    	html += '<div id="owl-demo" class="ui special cards owl-carousel owl-theme">';
+			    	for (var i = 0; i < msg.length; i++) {
+			    		html += '<div class="item">';
+						html += '<div class="card" style="width:260px !important;">';
+						html += '<div class="blurring dimmable image">';
+						html += '<div class="ui dimmer transition hidden">';
+						html += '<div class="content">';
+						html += '<div class="center">';
+						html += '<i class="empty heart icon position"></i><div class="ui yellow button bpButton">Get Best Price</div>';
+						html += '<br>';
+						html += '<a href="/vdp/'+msg[i].vin+'">';
+						html += '<div class="ui inverted button detailsButton"> View Details </div>';
+						html += '</a>';
+						html += '</div>';
+						html += '</div>';
+						html += '</div>';
+						html += '<img src="/images/sample.png"><i class="empty heart icon position"></i>';
+						html += '</div>';
+						html += '<div class="content">';
+						html += '<a href="/vdp/'+msg[i].vin+'" class="header srpHeaderFont">'+msg[i].type+' '+msg[i].year+' '+msg[i].make+' '+msg[i].model+' '+msg[i].bodystyle+'<span class="srpHeaderView"> <i class="unhide icon"></i>44</span></a>';
+						html += '<div class="meta"><span class="srpHeaderDetails">'+msg[i].mileage+' Miles</span><span>|</span><span class="srpHeaderDetails">'+msg[i].citympg+'/'+msg[i].highwaympg+' MPG</span><span>|</span><span class="srpHeaderDetails">'+msg[i].drivertrain+' </span></div></div>';
+						html += '<div class="extra content"><span>MSRP<span class="srpHeaderDetails">&nbsp;<strike>$'+msg[i].msrp+'&nbsp;&nbsp;</strike></span></span><span> <span class="srpHeaderSellingprice">$'+msg[i].sellingprice+'</span></span></div>';
+						html += '</div>';
+			    		html += '</div>';
+			    	}
+			    	html += '</div>';
+			    	$(".recommend").html(html);
+			    	reloadFunction();
+			    }
+			})
+			function reloadFunction() {
+				$('.special.cards .image').dimmer({
+					on: 'hover'
+				});
+				var owl = $("#owl-demo");
+				owl.owlCarousel({
+					autoPlay : 3000,
+					items : 3, //10 items above 1000px browser width
+					itemsDesktop : [1000,3], //5 items between 1000px and 901px
+					itemsDesktopSmall : [900,2], // betweem 900px and 601px
+					itemsTablet: [600,], //2 items between 600 and 0
+					itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+				});
+			}			  			
+		});			

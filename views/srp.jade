@@ -1,0 +1,278 @@
+extends layout
+block content
+	include ./header.jade
+		include ./breadcrumb.jade
+		br
+		div(class="ui grid")
+			br
+			div(class="four wide column srpLeft")
+				include ./srpfilter.jade
+			div(class="twelve wide column srpRight")
+				include ./srpsearch.jade	
+				hr
+				include ./srpsort.jade	
+				include ./srpresult.jade
+				include ./disclaimer.jade
+		include ./footer.jade			
+	script.
+		var skip = 12;
+		reloadFunction();
+		function getChecked() {
+			var checkboxes = document.getElementsByClassName("filter");
+			var checkboxesChecked = [];		
+			var radiobutton = document.getElementsByClassName("sort");							
+			var finalresult = {"type":"","year":"", "model":"", "bodystyle":"", "trim":"","skip":"","sort":""};
+			var finalresultAll = {"type":"","year":"", "model":"", "bodystyle":"", "trim":"","skip":"","sort":""};
+			for (var i=0; i<checkboxes.length; i++) {
+				switch(checkboxes[i].name) {
+					case 'type':
+						insertData(finalresultAll,"type",checkboxes[i].value);
+						break;					
+					case 'year':
+						insertData(finalresultAll,"year",checkboxes[i].value);
+						break;
+					case 'model':
+						insertData(finalresultAll,"model",checkboxes[i].value);
+						break;
+					case 'bodystyle':
+						insertData(finalresultAll,"bodystyle",checkboxes[i].value);
+						break;								
+					case 'trim':
+						insertData(finalresultAll,"trim",checkboxes[i].value);				
+						break;
+					default:
+						break;
+				}								
+				if (checkboxes[i].checked) {
+					switch(checkboxes[i].name) {
+						case 'type':
+							insertData(finalresult,"type",checkboxes[i].value);	
+							break;
+						case 'year':
+							insertData(finalresult,"year",checkboxes[i].value);	
+							break;
+						case 'model':
+							insertData(finalresult,"model",checkboxes[i].value);	
+							break;
+						case 'bodystyle':
+							insertData(finalresult,"bodystyle",checkboxes[i].value);
+							break;							
+						case 'trim':
+							insertData(finalresult,"trim",checkboxes[i].value);						
+							break;
+						default:
+							break;
+					}
+				}
+			}
+			for (var i in finalresult) {
+				if (i == "sort") {
+					var e = document.getElementById("srpSelect");
+					var strUser = e.options[e.selectedIndex].value;
+					switch(strUser) {
+						case 'year_asc':
+							finalresult.sort += "year,1";
+							break;
+						case 'year_desc':
+							finalresult.sort += "year,-1";
+							break;
+						case 'model_asc':
+							finalresult.sort += "model,1";
+							break;
+						case 'model_desc':
+							finalresult.sort += "model,-1";
+							break;
+						case 'mileage_asc':
+							finalresult.sort += "mileage,1";
+							break;
+						case 'mileage_desc':
+							finalresult.sort += "mileage,-1";
+							break;	
+						case 'sellingprice_asc':
+							finalresult.sort += "sellingprice,1";
+							break;
+						case 'sellingprice_desc':
+							finalresult.sort += "sellingprice,-1";
+							break;		
+						case 'bestdeal_desc':
+							finalresult.sort += "bestdeal,-1";
+							break;
+						default:
+							finalresult.sort += "year,1";
+							break;							
+					}
+				} else  if (i == "skip") {
+					finalresult.skip = 12;
+				} else if(finalresult[i] == "") {
+					finalresult[i] = finalresultAll[i]; 
+				} 
+			}
+			return finalresult;
+		}
+
+		function insertData(result,name,pass) {
+			if (result[name] != "") {
+				result[name] += "," + pass;
+			} else {
+				result[name] += pass;
+			}
+		}
+
+		function queryResult() {
+			ajaxquery(getChecked());
+		}
+
+		function ajaxquery(result) {
+			skip = 12;
+			$.ajax({
+			    dataType: 'json',
+			    data: result,
+			    type: 'POST',
+			    url: "./query",
+				beforeSend: function() {
+					//$('#response').text('Loading...');
+					$(".srp-left").css("background-color","lightgray");
+					$(".srp-right").css("background-color","lightgray");
+				},			    
+			    success: function(msg) {
+			    	var html = restrictContent(msg);	
+					$("#total").html(msg.length + " Vehicles Found");		  
+			    	$(".cards").html(html);
+					if(skip > msg.length) {
+						$(".loadmoreInfo").html("<p>You are at the bottom now!</p>");
+					} else {
+						$(".loadmoreInfo").html('<br><center><a class="ui inverted button blue loadmore">Clike Me to Load More</a></center>');
+						$(".loadmore").on("click",loadMoreVehicles);
+					}
+					reloadFunction();
+			    },
+			    error:function(msg) {
+			    	console.log(msg);
+			    }
+			});
+		}
+		var filter = document.getElementsByClassName("filter");		
+		for (var i = 0; i < filter.length; i++) {
+			 filter[i].addEventListener('click', queryResult);
+		}
+		$("#srpSelect").change(function(){
+			queryResult();
+		})
+		function loadMoreVehicles() {
+			$.ajax({
+			    dataType: 'json',
+			    type: 'POST',
+			    data: getChecked(),
+			    url: "./loadmore/"+skip,
+				beforeSend: function() {
+
+				},			    
+			    success: function(msg) {	
+			    	var html = reloadContent(msg);
+			    	$(html).appendTo(".cards");
+					if(msg.length != 12) {
+						skip = 12;
+						$(".loadmoreInfo").html("<p>&nbsp;</p>");
+					} 				    	
+			    	skip += 12;
+			    	reloadFunction();
+			    }
+			})    
+		}
+		function reloadContent(msg) {
+			var html = '';
+			for (var i in msg) {
+				html += '<div class="card">';
+				html += '<div class="blurring dimmable image">';
+				html += '<div class="ui dimmer transition hidden">';
+				html += '<div class="content">';
+				html += '<div class="center">';
+				html += '<i class="empty heart icon position"></i><div class="ui yellow button bpButton">Get Best Price</div>';
+				html += '<br>';
+				html += '<a href="/vdp/'+msg[i].vin+'">';
+				html += '<div class="ui inverted button detailsButton"> View Details </div>';
+				html += '</a>';
+				html += '</div>';
+				html += '</div>';
+				html += '</div>';
+				html += '<img src="/images/sample.png"><i id="'+msg[i].vin+'" class="empty heart icon position"></i>';
+				html += '</div>';
+				html += '<div class="content">';
+				html += '<a href="/vdp/'+msg[i].vin+'" class="header srpHeaderFont">'+msg[i].type+' '+msg[i].year+' '+msg[i].make+' '+msg[i].model+' '+msg[i].bodystyle+'<span class="srpHeaderView"> <i class="unhide icon"></i>44</span></a>';
+				html += '<div class="meta"><span class="srpHeaderDetails">'+msg[i].mileage+' Miles</span><span>|</span><span class="srpHeaderDetails">'+msg[i].citympg+'/'+msg[i].highwaympg+' MPG</span><span>|</span><span class="srpHeaderDetails">'+msg[i].drivertrain+' </span></div></div>';
+				html += '<div class="extra content"><span>MSRP<span class="srpHeaderDetails">&nbsp;<strike>$'+msg[i].msrp+'&nbsp;&nbsp;</strike></span></span><span> <span class="srpHeaderSellingprice">$'+msg[i].sellingprice+'</span></span></div>';
+				html += '</div></div>';
+			}  
+			return html;
+		}
+
+		function restrictContent(msg) {
+			var html = "";
+			for (var i in msg) {
+			   	if (i < 12 || (skip - 12 < i && i < skip)) {
+					html += '<div class="card">';
+					html += '<div class="blurring dimmable image">';
+					html += '<div class="ui dimmer transition hidden">';
+					html += '<div class="content">';
+					html += '<div class="center">';
+					html += '<i class="empty heart icon position"></i><div class="ui yellow button bpButton">Get Best Price</div>';
+					html += '<br>';
+					html += '<a href="/vdp/'+msg[i].vin+'">';
+					html += '<div class="ui inverted button detailsButton"> View Details </div>';
+					html += '</a>';
+					html += '</div>';
+					html += '</div>';
+					html += '</div>';
+					html += '<img src="/images/sample.png"><i id="'+msg[i].vin+'" class="empty heart icon position"></i>';
+					html += '</div>';
+					html += '<div class="content">';
+					html += '<a href="/vdp/'+msg[i].vin+'" class="header srpHeaderFont">'+msg[i].type+' '+msg[i].year+' '+msg[i].make+' '+msg[i].model+' '+msg[i].bodystyle+'<span class="srpHeaderView"> <i class="unhide icon"></i>44</span></a>';
+					html += '<div class="meta"><span class="srpHeaderDetails">'+msg[i].mileage+' Miles</span><span>|</span><span class="srpHeaderDetails">'+msg[i].citympg+'/'+msg[i].highwaympg+' MPG</span><span>|</span><span class="srpHeaderDetails">'+msg[i].drivertrain+' </span></div></div>';
+					html += '<div class="extra content"><span>MSRP<span class="srpHeaderDetails">&nbsp;<strike>$'+msg[i].msrp+'&nbsp;&nbsp;</strike></span></span><span> <span class="srpHeaderSellingprice">$'+msg[i].sellingprice+'</span></span></div>';
+					html += '</div></div>';
+			    }
+			}
+			return html;
+		}
+
+		$(".loadmore").on("click",loadMoreVehicles);
+
+		function reloadFunction() {
+			$('.special.cards .image').dimmer({
+				on: 'hover'
+			});
+			$('i.empty.heart.position:not(.bound)').addClass('bound').on('click', onSaveClicked);				
+		}
+		function onSaveClicked() {
+			var vin = $(this).attr('id');
+			var parent = $(this).parent().parent();
+			var title = parent.find(".srpHeaderFont")[0].innerHTML.split("<span")[0];
+			var imgPath = parent.find(".dimmable").children("img")[0].currentSrc;
+
+			if (checkloginstatus == false) {
+				//$.when(checkVinCookie(vin)).then(checkTitleCookie(vin+"*"+title)).then(checkImgPathCookie(vin+"*"+imgPath));
+				$.when(checkVinCookie(vin)).then(checkTitleCookie(vin+"*"+title));
+				getSaveVehicles();
+			} else {
+				$.ajax({
+				    dataType: 'json',
+				    type: 'POST',
+				    url: "../save/"+vin,
+					beforeSend: function() {
+
+					},			    
+				    success: function(msg) {	
+				    	console.log(msg);
+				    	getSaveVehicles();
+				    }
+				})
+			}
+		}
+
+		$('#srpSelect') 
+			.dropdown()
+		;
+		$('.ui.dropdown')
+			.dropdown()
+		;
+	

@@ -1,0 +1,18 @@
+block content
+	div.ui.grid
+		div(class="eight wide column")
+			p(id="total") #{total} Vehicles Found
+		div(class="eight wide column")
+			select(name="sort",class="ui dropdown",id="srpSelect")
+				option(value="") Sort By
+				option(value="bestdeal_desc") Best Deal
+				option(value="year_asc") Year Old to New
+				option(value="year_desc") Year New to Old
+				option(value="model_asc") Model A to Z
+				option(value="model_desc") Model Z to A
+				option(value="mileage_asc") Mileage Low to High
+				option(value="mileage_desc") Mileage High to Low
+				option(value="sellingprice_asc") Price Low to High
+				option(value="sellingprice_desc") Price High to Low						
+		br
+	

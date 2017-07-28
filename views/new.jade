@@ -1,0 +1,156 @@
+extends layout
+block content
+	include ./header.jade
+		div.ui.grid
+			div.twelve.colomu.wide
+				p.banner
+					img(src="/images/newbanner.jpg")
+		div#rangeslider
+			div.ui.grid
+				div.column.eight.wide
+					p.title Price:
+					div#price
+					p.result
+						span#slider-price-snap-value-lower
+						span &nbsp;-&nbsp;
+						span#slider-price-snap-value-upper				
+				div.column.eight.wide
+					p.title Year:
+					div#year
+					p.result
+						span#slider-year-snap-value-lower
+						span &nbsp;-&nbsp;
+						span#slider-year-snap-value-upper
+		div#model
+			h1.title Browse By Model
+			div.ui.top.attached.tabular.menu
+				a.item(data-tab="first") 
+					p
+						img(src="/images/models/convertible.png")
+						br
+						span Convertible
+				a.item(data-tab="second")
+					p
+						img(src="/images/models/coupe.png")
+						br
+						span Coupe
+				a.item(data-tab="third")
+					p
+						img(src="/images/models/hybrid.png")
+						br
+						span Hybrid
+				a.item.active(data-tab="four")
+					p
+						img(src="/images/models/sedan.png")
+						br
+						span Sedan
+				a.item(data-tab="five")
+					p
+						img(src="/images/models/suv.png")
+						br
+						span SUV
+				a.item(data-tab="six")
+					p
+						img(src="/images/models/truck.png")
+						br
+						span Truck
+				a.item(data-tab="seven")
+					p
+						img(src="/images/models/van.png")
+						br
+						span Van
+				a.item(data-tab="eight")
+					p
+						img(src="/images/models/wagon.png")
+						br
+						span Wagon				
+			div.ui.bottom.attached.tab.segment(data-tab="first")
+				p Coming Soon!
+			div.ui.bottom.attached.tab.segment(data-tab="second")
+				p Coming Soon!
+			div.ui.bottom.attached.tab.segment(data-tab="third")
+				p Coming Soon!
+			div.ui.bottom.attached.tab.segment.active(data-tab="four")
+				div.ui.grid.models
+					div.column.eight.wide
+						a(href="/")
+							img(src="/images/models/showroom/accord_sedan.png")
+							p.modelname Accord Sedan
+					div.column.eight.wide
+						a(href="/")
+							img(src="/images/models/showroom/civic_sedan.png")
+							p.modelname Civic Sedan				
+			div.ui.bottom.attached.tab.segment(data-tab="five")
+				p Coming Soon!
+			div.ui.bottom.attached.tab.segment(data-tab="six")
+				p Coming Soon!
+			div.ui.bottom.attached.tab.segment(data-tab="seven")
+				p Coming Soon!
+			div.ui.bottom.attached.tab.segment(data-tab="eight")
+				p Coming Soon!
+		div#lifestyle
+			h1.title Browse By Lifestyle
+			div.ui.grid
+				div.column.four.wide.section
+					div.hvr-float-shadow
+						a(href="/")
+							img(src="/images/family.jpg")
+							p Family
+				div.column.four.wide.section
+					div.hvr-float-shadow
+						a(href="/")
+							img(src="/images/rugge.jpg")
+							p Rugge
+				div.column.four.wide.section
+					div.hvr-float-shadow
+						a(href="/")
+							img(src="/images/commute.jpg")
+							p Commute
+				div.column.four.wide.section
+					div.hvr-float-shadow
+						a(href="/")
+							img(src="/images/sport.jpg")
+							p Sport
+		include ./footer.jade
+
+	script.
+		$('.menu .item')
+		  .tab()
+		;	
+		var priceSnapSlider = document.getElementById('price');
+		var yearSnapSlider = document.getElementById('year');
+
+		noUiSlider.create(priceSnapSlider, {
+			start: [ #{cheapprice}, #{expensiveprice} ],
+			//snap: true,
+			connect: true,
+			range: {
+				'min': [#{cheapprice}],
+				'max': [#{expensiveprice}]
+			}
+		});
+		noUiSlider.create(yearSnapSlider, {
+			start: [ #{oldyear}, #{newyear} ],
+			//snap: true,
+			connect: true,
+			range: {
+				'min': [#{oldyear}],
+				'max': [#{newyear}]
+			}
+		});
+
+		var priceSnapValues = [
+			document.getElementById('slider-price-snap-value-lower'),
+			document.getElementById('slider-price-snap-value-upper')
+		];
+		var yearSnapValues = [
+			document.getElementById('slider-year-snap-value-lower'),
+			document.getElementById('slider-year-snap-value-upper')
+		];
+
+		priceSnapSlider.noUiSlider.on('update', function( values, handle ) {
+			priceSnapValues[handle].innerHTML = '$'+ Math.round(values[handle]);
+		});			
+		yearSnapSlider.noUiSlider.on('update', function( values, handle ) {
+			yearSnapValues[handle].innerHTML = Math.round(values[handle]);
+		});		

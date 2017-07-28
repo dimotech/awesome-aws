@@ -1,0 +1,331 @@
+block content
+	.ui.sidebar.right.inverted.vertical.menu.compared
+		p.title Your Saved Vechiles
+		hr
+		.results
+		br
+		center
+			.ui.buttons
+				a.ui.button.inverted.gotocompare Compare
+				.or
+				a.ui.button.inverted(href="/save") View Details
+		br
+		.ui.modal.comparedmodalcontent
+			.header 
+				h1 Welcome to Awesome Honda
+			.hint
+				p Please Choose At Least Two Vehicles To Compare!
+			.actions
+				.ui.button.hidecomparemodal Cancel									
+	div.fixed
+		div.pageHeader
+			div.ui.grid
+				div.ui.column.three.wide.dealerLogo
+					img(src="/images/honda.png")
+				div.ui.column.thirteen.wide
+					div.ui.massive.menu.headerMenu
+						a.active.item(href="/")
+							| Home
+						div.menu
+							div.item.ui.dropdown.simple
+								span New
+									i.dropdown.icon
+								div.menu
+									a.item(href="/srp")
+										| New Inventory
+									a.item
+										| New Car Specials
+									a.item
+										| Get Pre-Approved Now
+									a.item
+										| Payment Calculator	
+						div.menu
+							div.item.ui.dropdown.simple
+								span Used
+									i.dropdown.icon
+								div.menu
+									a.item
+										| Used Inventory
+									a.item
+										| Used Car Specials
+									a.item
+										| Used Car Under $10K
+									a.item
+										| Get Pre-Approved Now
+									a.item
+										| Payment Calculator											
+						div.menu
+							div.item.ui.dropdown.simple
+								span Specials
+									i.dropdown.icon
+								div.menu
+									a.item
+										| Honda Lease and Finance Specials
+									a.item
+										| New Car Specials
+									a.item
+										| Used Car Specials
+						div.menu
+							div.item.ui.dropdown.simple
+								span Service
+									i.dropdown.icon
+								div.menu
+									a.item
+										| Schedule Service
+									a.item
+										| Order Parts									 	
+						a.item
+							| Research
+						div.menu
+							div.item.ui.dropdown.simple
+								span Dealership
+									i.dropdown.icon
+								div.menu
+									a.item(href="/aboutus")
+										| About Us
+									a.item
+										| Contact Us
+						div.right.menu
+							if loginstatus
+								div.item.ui.dropdown.simple
+									span  
+										i.smile.icon
+									div.menu
+										a.item.logoutbutton
+											| Log Out										
+							else
+								div.item.ui.dropdown.simple
+									span
+										i.user.icon
+									div.menu
+										a.item.usermodal
+											| Log In																
+							if loginstatus == false
+								a.item.save
+									i.empty.heart.icon
+									span.vehiclesCount
+							else
+								a.item.save
+									i.empty.heart.icon
+									span.vehiclesCount						
+							a.item
+								i.search.icon
+			.ui.modal.usermodalcontent
+				.header 
+					h1 Welcome to Awesome Honda
+				.content
+					.ui.column.middle.aligned.very.relaxed.stackable.grid
+						.ui.grid.two.column
+							.column.login
+								form.ui.form.loginform(method="POST",action="/validate")
+									p.logintitle Log In
+									.field
+										.ui.selection.dropdown.usertype
+											input(type="hidden",name="loginusertype")
+											i.dropdown.icon
+											.default.text User Type
+											.menu
+												.item(data-value="dealer") Dealer
+												.item(data-value="customer") Customer					
+									.field
+										.ui.left.icon.input.username
+											input(type="text",placeholder="Email",name="loginemail")
+											i.mail.outline.icon
+									.field
+										.ui.left.icon.input.password
+											input(type="password",placeholder="Password",name="loginpassword")
+											i.lock.icon			
+									.field
+										a.forget Forget Password?
+										button.ui.blue.button.loginbutton Log In
+							.ui.vertical.divider OR		
+							.column
+								.signup
+									form.ui.form.signupform(method="POST")							
+										p.signuptitle Sign Up					
+										.field
+											.ui.left.icon.input.username
+												input(type="text",placeholder="Email",name="signupemail")
+												i.mail.outline.icon
+										.field
+											.ui.left.icon.input.password
+												input(type="password",placeholder="Password",name="signuppassword")
+												i.lock.icon											
+										.field
+											button.ui.blue.button.signupbutton Sign Up
+								.forgetpassword
+									form.ui.form.forgetform(method="POST")						
+										p.forgetpasswordtile Reset Your Password				
+										.field
+											.ui.left.icon.input.username
+												input(type="text",placeholder="Username",name="forgetemail")
+												i.user.icon
+										.field
+											.ui.left.icon.input.password
+												input(type="password",placeholder="Password",name="forgetpassword")
+												i.lock.icon										
+										.field
+											a.signupbutton Sign Up?								
+											button.ui.blue.button.forgetbutton Reset Password
+								.hint
+									p.hinttitle New Customer?
+									a.gotosignupbutton Sign Up Now!																	
+				.actions
+					.ui.button.hideusermodal Cancel
+	div.fade
+	.pusher				
+		script.
+			var checkloginstatus = #{loginstatus}		
+			$('.ui.dropdown')
+				.dropdown()
+			;		
+			loginReload();
+			$('.ui.form.loginform').form({
+				fields: {
+					loginemail: {
+						identifier : 'loginemail',
+						rules: [
+							{
+								type   : 'email',
+								prompt : 'Please enter a valid e-mail'
+							}
+						]
+					},
+					loginpassword: {
+						identifier : 'loginpassword',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Please enter a valid password'
+							}
+						]
+					},				
+					loginusertype: {
+						identifier : 'loginusertype',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Please choose a valid user type'
+							}
+						]
+					},				
+				}
+			});
+			$('.ui.form.signupform').form({
+				fields: {
+					signupemail: {
+						identifier : 'signupemail',
+						rules: [
+							{
+								type   : 'email',
+								prompt : 'Please enter a valid e-mail'
+							}
+						]
+					},
+					signuppassword: {
+						identifier : 'signuppassword',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Please enter a valid password'
+							}
+						]
+					},								
+				}				
+			});
+			$('.ui.form.forgetform').form({
+				fields: {
+					forgetemail: {
+						identifier : 'forgetemail',
+						rules: [
+							{
+								type   : 'email',
+								prompt : 'Please enter a valid e-mail'
+							}
+						]
+					},
+					forgetpassword: {
+						identifier : 'forgetpassword',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Please enter a valid password'
+							}
+						]
+					},								
+				}				
+			});
+
+			$(".ui.button.hideusermodal").on("click",function(){
+				$('.ui.modal.usermodalcontent')
+					.modal('hide')
+				;			
+			})
+			$(".ui.button.hidecomparemodal").on("click",function(){
+				$('.ui.modal.comparedmodalcontent')
+					.modal('hide')
+				;			
+			})		
+			$(".forget").on("click",function(){
+				$('.hint').fadeOut(500);
+				$('.signup').fadeOut(500);
+				$('.content .forgetpassword').delay(500).fadeIn(500);
+			})
+			$(".signupbutton").on("click",function(){
+				$('.content .forgetpassword').fadeOut(500);
+				$('.content .signup').delay(500).fadeIn(500);
+			})
+			$(".gotosignupbutton").on("click",function(){
+				$('.hint').fadeOut(500);
+				$('.content .signup').delay(500).fadeIn(500);
+			})					
+			$('.ui.form.loginform').submit(function(event){
+				event.preventDefault();
+				var formData = $('.ui.form.loginform').serialize();
+				$.ajax({
+				    type: 'POST',
+				    url: "../validate",
+				    data: formData,
+				    success: function(msg) {	
+				    	if (msg == "") {
+				    		$(".ui.form.loginform .field").addClass("error");
+				    	} else if (msg == "dealer") {
+				    		checkloginstatus = true;
+				    		getSaveVehicles();
+				    		window.location.replace("/manage");
+				    	} else {
+							$('.ui.modal.usermodalcontent')
+								.modal('hide')
+							;
+							$('.pageHeader .headerMenu .right.menu > .item:first-child').html('<span><i class="smile icon"></i></span><div class="menu" tabindex="-1"><a class="item logoutbutton">Log Out</a></div>');
+							logoutRelaod();
+							checkloginstatus = true;
+							getSaveVehicles();	
+				    	}
+				    }
+				})				
+			});
+			logoutRelaod();
+			function logoutRelaod() {
+				$(".logoutbutton").on("click",function(){
+					$.ajax({
+					    type: 'POST',
+					    url: "../logout",
+					    success: function(msg) {	
+					    	location.reload();
+					    }
+					})		
+				})
+			}
+			function loginReload() {
+				$(".usermodal").on("click",function(){
+					$('.ui.modal.usermodalcontent').modal({
+						detachable: true,				
+						autofocus: false,
+						closable: false,
+						onApprove : function() {
+							return true;
+						},					
+					}).modal('show');				
+				})			
+			}

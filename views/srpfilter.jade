@@ -1,0 +1,51 @@
+block content
+	div#response
+		a.clearOptions 
+			center
+				| Clear All
+		hr
+		div
+			span#type TYPE
+				each val, key in srpfiltertype
+					div.filterOption
+						div(class="srp-filter-type ui checkbox")
+							input(class="filter", type="checkbox", name='type', value='#{key}') 
+							label #{key}
+						span.filterValue #{val}
+		hr
+		div
+			span#year YEAR
+				each val, key in srpfilteryear
+					div.filterOption
+						div(class="srp-filter-year ui checkbox")
+							input(class="filter", type="checkbox", name='year', value='#{key}') 
+							label #{key}
+						span.filterValue #{val}	
+		hr				
+		div
+			span#model MODEL
+				each val, key in srpfiltermodel
+					div.filterOption
+						div(class="srp-filter-model ui checkbox")
+							input(class="filter", type="checkbox", name='model', value='#{key}') 
+							label #{key}
+						span.filterValue #{val}
+		hr
+		div
+		span#bodyStyle BODY
+				each val, key in srpfilterbodystyle
+					div.filterOption
+						div(class="srp-filter-bodystyle ui checkbox")
+							input(class="filter", type="checkbox", name='bodystyle', value='#{key}') 
+							label #{key}
+						span.filterValue #{val}
+		hr							
+		div
+			span#trim TRIM
+				each val, key in srpfiltertrim	
+					div.filterOption
+						div(class="srp-filter-trim ui checkbox")
+							input(class="filter", type="checkbox", name='trim', value='#{key}') 
+							label #{key}	
+						span.filterValue #{val}
+		br

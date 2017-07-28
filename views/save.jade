@@ -1,0 +1,66 @@
+extends layout
+block content
+	include ./header.jade
+		include ./breadcrumb.jade
+		div.garage
+			p.username Hi, #{username}! 
+			p.welcome Welcome to Your Garage!
+			div.ui.grid.savepage
+				div.sixteen.column.wide
+					div.ui.special.cards
+						each vehicle in savesresult
+							div.card(id="#{vehicle.vin}card")
+								div.blurring.dimmable.image
+									div.ui.dimmer
+										div.content
+											div.center
+												i.heart.icon.position
+												div.ui.yellow.button.bpButton Get Best Price
+												br
+												a(href="/vdp/#{vehicle.vin}")
+													div.ui.inverted.button.detailsButton View Details 
+									img(src="/images/sample.png")
+									i.heart.icon.position.saved(id="#{vehicle.vin}")
+								div.content
+									a.header.srpHeaderFont(href="/vdp/#{vehicle.vin}") #{vehicle.type} #{vehicle.year} #{vehicle.make} #{vehicle.model} #{vehicle.bodystyle}
+										span.srpHeaderView 
+											i.unhide.icon
+											| 44
+									div.meta
+										span.srpHeaderDetails #{vehicle.mileage} Miles
+										span |
+										span.srpHeaderDetails #{vehicle.citympg}/#{vehicle.highwaympg} MPG
+										span |
+										span.srpHeaderDetails #{vehicle.drivertrain} 
+								div.extra.content
+									span MSRP
+										span.srpHeaderDetails &nbsp;
+											strike $#{vehicle.msrp}&nbsp;&nbsp;
+									span 
+										span.srpHeaderSellingprice
+											$#{vehicle.sellingprice}
+		br
+		include ./footer.jade
+	script.
+		$('.special.cards .image').dimmer({
+			on: 'hover'
+		});
+		$('i.heart.position.saved').on('click', onDeleteClicked);
+		function onDeleteClicked() {
+			var cardId = $(this).parent().parent().attr('id');
+			var vin = cardId.substr(0,cardId.length-4);
+			console.log("vin: "+vin);
+			$.ajax({
+			    dataType: 'json',
+			    type: 'POST',
+			    url: "../delete/"+vin,
+				beforeSend: function() {
+
+				},			    
+			    success: function(msg) {	
+			    	console.log(msg); 
+			    	$(".card#"+cardId).remove();
+			    	getSaveVehicles();
+			    }
+			})
+		}				

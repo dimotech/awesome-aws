@@ -1,0 +1,418 @@
+extends layout
+block content
+	include ./header.jade
+		div.homepageCarousel
+			div#sync1.owl-carousel
+				div.item
+					img(src="/images/slideshow1.png")
+				div.item
+					img(src="/images/slideshow2.png")
+				div.item
+					img(src="/images/slideshow3.png")
+			div#sync2.owl-carousel
+				div.item
+					img(src="/images/slideshow1small.png")
+				div.item
+					img(src="/images/slideshow2small.png")
+				div.item
+					img(src="/images/slideshow3small.png")
+			.customNavigation
+				a.btn.prev
+					i.chevron.circle.left.icon
+				a.btn.next
+					i.chevron.circle.right.icon
+		br
+		div.section#One
+			h1.homepage 
+				center
+					| What Are You Looking For?
+			div.ui.grid.homepageShopButton
+				div.eight.wide.column
+					div.hvr-float-shadow
+						a(href="/new")
+							span.amount #{amountnew} Cars
+							img(src="/images/shopnew.png")
+				div.eight.wide.column
+					div.hvr-float-shadow
+						a(href="/used")
+							span.amount #{amountused} Cars
+							img(src="/images/shopused.png")
+		br
+		div.section#Two
+			h1.homepage
+				center
+					| Check Out Our Top Features
+			div.ui.top.attached.tabular.menu#homepageFeactures
+				a.item.bestdeal.active(data-tab="bestdeal") Best Deals
+				a.item.popular(data-tab="popular") Popular
+				a.item.newarrival(data-tab="newarrival") New Arrival
+			div.ui.bottom.attached.active.tab.segment#homepageBestdeal(data-tab="bestdeal")
+				h4.ui.horizontal.divider.header
+					i.tag.icon
+					| New
+				div.ui.special.centered.cards.new
+				h4.ui.horizontal.divider.header
+					i.tag.icon
+					| Used
+				div.ui.special.centered.cards.used 		
+			div.ui.bottom.attached.tab.segment#homepagePopular(data-tab="popular")
+				h4.ui.horizontal.divider.header
+					i.tag.icon
+					| New
+				div.ui.special.centered.cards.new
+				h4.ui.horizontal.divider.header
+					i.tag.icon
+					| Used
+				div.ui.special.centered.cards.used 
+			div.ui.bottom.attached.tab.segment#homepageNew(data-tab="newarrival")
+				h4.ui.horizontal.divider.header
+					i.tag.icon
+					| New
+				div.ui.special.centered.cards.new
+				h4.ui.horizontal.divider.header
+					i.tag.icon
+					| Used
+				div.ui.special.centered.cards.used 
+		br
+		div.section#Three
+			h1.homepage
+				center
+					| What Our Customers Are Saying
+			div#sync3.owl-carousel
+				div.item
+					p.center 				
+						i.star.icon
+						i.star.icon
+						i.star.icon
+						i.star.icon
+						i.star.icon
+					p.content. 
+						Went to at least 6 different honda dealership and got a great offer with 2 of them. Then i called honda downtown and spoke to A sales person name David Choi. This guy is awesome! I told him what I'm looking for and the deal i wanted and he asked me to come by and see him and he said that i won't be disappointed! The guy actually came to work on his day off just to meet us. He gave me the deal i cant resist! But, i didn't stop there and ask david if i can speak to his sales manager Mr. Dan Gene! Man, Dan is A great guy and so easy to talk to! He gave us even lower out the door price and gave us everything i wanted in the car more than i expected! Even the other honda sales manager cant compete with the price so We came home with 2017 The Accord EX-L! Mr. Dan Gene gave us his personal cell number just incase we run into some problem with the car! We will definitely come back to see these guys this November so we can get better deal again on the pilot we are planning on getting! I highly Recommend this dealership! They took really good care of us! 5 Stars!
+				div.item
+					p.center 				
+						i.star.icon
+						i.star.icon
+						i.star.icon
+						i.star.icon
+						i.star.icon
+					p.content.
+						My buying experience at this dealership was a smooth and easy. My sales person Amy was on her A game the entire time, very professional and patient showing cars and leading through the car buying process. I'm happy Amy was our sales person. Other staff in the dealer were helpful and friendly. This is the place to come to get your new Honda.
+				div.item
+					p.center 				
+						i.star.icon
+						i.star.icon
+						i.star.icon
+						i.star.icon
+						i.star.icon
+					p.content.
+						Norma and Sailyn were incredible! I got my Honda Civic EX-T over the March madness weekend for a great deal. From the beginning Norma was very sweet and personable. She did her best to meet all of my monetary needs. At a certain point she asked me, "If I get you the price and monthly that you want you'll leave with the car tonight?" to which i responded "Of course, why wouldn't I". Not long after that we were closing in on a great deal. As long as you know what you are talking about and you come into the dealership well informed, you will see that these people are being honest and straight forward with you. Norma even helped me get a great price for my new full coverage insurance from State Farm. Everything fell into place and I DROVE off in a sleek new car. Make sure when you ring the bell you go wild!! They love it!! Thanks Norma!!
+			div#sync4.owl-carousel
+				div.item
+					div.ui.grid
+						div.ui.column.six.wide
+							img.ui.circular.tiny.image.ori(src="./images/elyse.png")
+						div.ui.column.ten.wide
+							span.name Elyse
+							br
+							span.date November 27, 2016
+				div.item
+					div.ui.grid
+						div.ui.column.six.wide
+							img.ui.circular.tiny.image.ori(src="./images/matthew.png")
+						div.ui.column.ten.wide
+							span.name Matthew
+							br
+							span.date November 27, 2016				
+				div.item.ui.column
+					div.ui.grid
+						div.ui.column.six.wide
+							img.ui.circular.tiny.image.ori(src="./images/molly.png")
+						div.ui.column.ten.wide
+							span.name Molly
+							br
+							span.date November 27, 2016										
+		br
+		div.section#Four
+			h1.homepage
+				center
+					| Take A Look Around
+			div.ui.grid
+				div.five.column.row
+					div.column
+						a(href="/")
+							div.box.hvr-overline-reveal
+								img(src="/images/value your trade.png")
+								p.name Value Your Trade
+					div.column
+						a(href="/")
+							div.box.hvr-overline-reveal
+								img(src="/images/financing application.png")
+								p.name Finance Application
+					div.column
+						a(href="/")
+							div.box.hvr-overline-reveal
+								img(src="/images/payment caculator.png")
+								p.name Payment Caculator			
+					div.column
+						a(href="/")
+							div.box.hvr-overline-reveal
+								img(src="/images/schedule service.png")
+								p.name Schedule Service			
+					div.column
+						a(href="/")
+							div.box.hvr-overline-reveal
+								img(src="/images/learn warranties.png")
+								p.name Learn Warranties
+		div.section#Five
+			div.ui.grid
+				div.ui.column.nine.wide
+					div.dealershipContent
+						h3 Who Are We?
+						p. 
+							Awesome Honda in Los Angeles, is proud to be an automotive leader in our area. Since opening our doors, Awesome Honda has kept a firm commitment to our customers. We offer a wide selection of vehicles and hope to make the car buying process as quick and hassle free as possible.
+						h3 Why Us?
+						p.
+							If you would like financing options and you are in the market to purchase a new Honda or used car or truck, we will provide assistance to help you find financing options that fit your needs! Whether you have bad credit, no credit, or are a first time car buyer, you can trust that Findlay Honda will get you into the car or truck you choose with professionalism and attention to your needs
+				div.ui.column.seven.wide
+					div.dealershipPhoto
+						p.welcome Welcome to
+						p.dealershipName Awesome Honda
+						p.dealershipbutton
+							a.ui.button(href="/schedule-service") Schedule Service
+		div.section#Six
+			div.ui.grid
+				div.ui.column.eight.wide
+					p.dealershipName Awesome Honda
+					p.dealershipAddress 1545 Amherst Ave,
+					p.dealershipAddress Los Angeles, CA 90025
+					p.words Check Out Today's Schedule
+					div.ui.grid
+						div.three.column.row
+							div.column
+								p.department Sales
+								p.phone (213) 308-9239
+								p.time 8:00 AM - 6:00 PM
+							div.column
+								p.department Service
+								p.phone (213) 308-9239
+								p.time 8:00 AM - 6:00 PM
+							div.column
+								p.department Parts
+								p.phone (213) 308-9239
+								p.time 8:00 AM - 6:00 PM
+				div.ui.column.eight.wide
+		include ./footer.jade		
+	script.
+		$(document).ready(function() {	
+			var sync1 = $("#sync1");
+			var sync2 = $("#sync2");
+			sync1.owlCarousel({
+				touchDrag:true,
+				mouseDrag:true,			
+				singleItem:true,
+				slideSpeed:1000,
+				navigation:true,
+				pagination:false,
+				afterAction:syncPosition,
+				responsiveRefreshRate: 200,
+				autoPlay:3000,
+			});
+			sync2.owlCarousel({
+				items:3,
+				itemsDesktop: [1199,10],
+				itemsDesktopSmall: [979,10],
+				itemsTablet: [768,8],
+				itemsMobile: [479,4],
+				pagination:false,
+				responsiveRefreshRate: 100,
+				afterInit: function(el){
+					el.find(".owl-item").eq(0).addClass("synced");
+				}
+			});
+ 
+			function syncPosition(el){
+				var current = this.currentItem;
+				$("#sync2").find(".owl-item").removeClass("synced").eq(current).addClass("synced")
+				if($("#sync2").data("owlCarousel") !== undefined){
+					center(current)
+				}
+			}
+
+			$("#sync2").on("click", ".owl-item", function(e){
+				e.preventDefault();
+				var number = $(this).data("owlItem");
+				sync1.trigger("owl.goTo",number);
+			});
+
+			function center(number){
+				var sync2visible = sync2.data("owlCarousel").owl.visibleItems;
+				var num = number;
+				var found = false;
+				for(var i in sync2visible){
+					if(num === sync2visible[i]){
+						var found = true;
+					}
+				}
+
+				if(found===false){
+					if(num>sync2visible[sync2visible.length-1]){
+						sync2.trigger("owl.goTo", num - sync2visible.length+2)
+					}else{
+						if(num - 1 === -1){
+							num = 0;
+						}
+						sync2.trigger("owl.goTo", num);
+					}
+				} else if(num === sync2visible[sync2visible.length-1]){
+					sync2.trigger("owl.goTo", sync2visible[1])
+				} else if(num === sync2visible[0]){
+					sync2.trigger("owl.goTo", num-1)
+				}
+			}
+			$(".next").click(function(){
+				sync1.trigger('owl.next');
+			})
+			$(".prev").click(function(){
+				sync1.trigger('owl.prev');
+			})
+			$(".play").click(function(){
+				sync1.trigger('owl.play',1000); //owl.play event accept autoPlay speed as second parameter
+			})
+			$(".stop").click(function(){
+				sync1.trigger('owl.stop');
+			})
+			var sync3 = $("#sync3");
+			var sync4 = $("#sync4");
+			sync3.owlCarousel({
+				touchDrag:true,
+				mouseDrag:true,			
+				singleItem:true,
+				slideSpeed:1000,
+				navigation:true,
+				pagination:false,
+				afterAction:syncPosition,
+				responsiveRefreshRate: 200,
+				autoPlay:3000,
+			});
+			sync4.owlCarousel({
+				items:3,
+				itemsDesktop: [1199,10],
+				itemsDesktopSmall: [979,10],
+				itemsTablet: [768,8],
+				itemsMobile: [479,4],
+				pagination:false,
+				responsiveRefreshRate: 100,
+				afterInit: function(el){
+					el.find(".owl-item").eq(0).addClass("synced");
+				}
+			});
+ 
+			function syncPosition(el){
+				var current = this.currentItem;
+				$("#sync4").find(".owl-item").removeClass("synced").eq(current).addClass("synced")
+				if($("#sync4").data("owlCarousel") !== undefined){
+					center(current)
+				}
+			}
+
+			$("#sync4").on("click", ".owl-item", function(e){
+				e.preventDefault();
+				var number = $(this).data("owlItem");
+				sync3.trigger("owl.goTo",number);
+			});
+
+			function center(number){
+				var sync4visible = sync4.data("owlCarousel").owl.visibleItems;
+				var num = number;
+				var found = false;
+				for(var i in sync4visible){
+					if(num === sync4visible[i]){
+						var found = true;
+					}
+				}
+
+				if(found===false){
+					if(num>sync4visible[sync4visible.length-1]){
+						sync4.trigger("owl.goTo", num - sync4visible.length+2)
+					}else{
+						if(num - 1 === -1){
+							num = 0;
+						}
+						sync4.trigger("owl.goTo", num);
+					}
+				} else if(num === sync4visible[sync4visible.length-1]){
+					sync4.trigger("owl.goTo", sync4visible[1])
+				} else if(num === sync4visible[0]){
+					sync4.trigger("owl.goTo", num-1)
+				}
+			}				
+			$('.menu .item')
+				.tab()
+			;
+			homepageQuery("bestdeal");
+			homepageQuery("popular");
+			homepageQuery("newarrival");
+			//$(".popular").on("click",homepageQuery("popular"));
+			//$(".new").on("click",homepageQuery("newarrival"));
+			function homepageQuery(method) {
+				$.ajax({
+				    dataType: 'json',
+				    type: 'POST',
+				    data: method,
+				    url: "./homepagequery/"+method,
+					beforeSend: function() {
+
+					},			    
+				    success: function(msg) {	
+				    	var htmlnew = reloadContent(msg.new);
+				    	var htmlused = reloadContent(msg.used);
+				    	if (method == "bestdeal") {
+				    		$(htmlnew).appendTo("#homepageBestdeal > .cards.new");
+				    		$(htmlused).appendTo("#homepageBestdeal > .cards.used");	
+				    	} else if (method == "popular") {
+				    		$(htmlnew).appendTo("#homepagePopular > .cards.new");
+				    		$(htmlused).appendTo("#homepagePopular > .cards.used");
+				    	} else {
+				    		$(htmlnew).appendTo("#homepageNew > .cards.new");
+				    		$(htmlused).appendTo("#homepageNew > .cards.used");				    	
+				    	}	    	
+				    	reloadFunction();
+				    }
+				}) 			
+			}	
+			function reloadFunction() {
+				$('.special.cards .image').dimmer({
+					on: 'hover'
+				});
+				$('i.empty.heart.position:not(.bound)').addClass('bound').on('click', onSaveClicked);		
+			}
+			function onSaveClicked() {
+				console.log($(this).attr("id"));
+			}													
+			function reloadContent(msg) {
+				var html = '';
+				for (var i in msg) {
+					html += '<div class="card">';
+					html += '<div class="blurring dimmable image">';
+					html += '<div class="ui dimmer transition hidden">';
+					html += '<div class="content">';
+					html += '<div class="center">';
+					html += '<i class="empty heart icon position"></i><div class="ui yellow button bpButton">Get Best Price</div>';
+					html += '<br>';
+					html += '<a href="/vdp/'+msg[i].vin+'">';
+					html += '<div class="ui inverted button detailsButton"> View Details </div>';
+					html += '</a>';
+					html += '</div>';
+					html += '</div>';
+					html += '</div>';
+					html += '<img src="/images/sample.png"><i id="'+msg[i].vin+'" class="empty heart icon position"></i>';
+					html += '</div>';
+					html += '<div class="content">';
+					html += '<a href="/vdp/'+msg[i].vin+'" class="header srpHeaderFont">'+msg[i].type+' '+msg[i].year+' '+msg[i].make+' '+msg[i].model+' '+msg[i].bodystyle+'<span class="srpHeaderView"> <i class="unhide icon"></i>44</span></a>';
+					html += '<div class="meta"><span class="srpHeaderDetails">'+msg[i].mileage+' Miles</span><span>|</span><span class="srpHeaderDetails">'+msg[i].citympg+'/'+msg[i].highwaympg+' MPG</span><span>|</span><span class="srpHeaderDetails">'+msg[i].drivertrain+' </span></div></div>';
+					html += '<div class="extra content"><span>MSRP<span class="srpHeaderDetails">&nbsp;<strike>$'+msg[i].msrp+'&nbsp;&nbsp;</strike></span></span><span> <span class="srpHeaderSellingprice">$'+msg[i].sellingprice+'</span></span></div>';
+					html += '</div></div>';
+				}  
+				return html;
+			}								
+		});			

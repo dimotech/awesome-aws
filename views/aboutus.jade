@@ -1,0 +1,35 @@
+extends layout
+block content
+	include ./header.jade
+		br
+		.aboutus
+			h1.title About Us
+			.ui.grid
+				.ui.eight.wide.column
+					p. 
+						Glad you visited our website! In fact, this is not an actual dealership website but a sample for user testing. Stephanie and I work for a company which provides responsive websites to auto dealerships. We have found something can be improved on most of the dealership websites and want to show them on this sample. Our goal is to create a website which can give the auto buyers the best online shopping experience and keep the customers stay on this website till they make a decision to buy. As we know, the pricing issues are the highest demands as the dealers want price changes to be done as soon as posible. Even though we have client services and programmers on our side to deal with these requests, this process takes quite long as there are just many queues to go through, which also easily brings in pricing mistakes, therefore causes money lose when a customer brings a copy of incorrect online price to the shop. Dealers are not satisfied with the price updating performance and want a way to get this job done in a batch as well as make sure every individual vehicle gets it correct price.
+					p.
+						We are going to set up a way for dealers to update the price directly through a built-in application on the websites where they can take over the job effortlessly, with higher efficiency and lower inaccuracy. In other words, helping dealers to keep their potential customers and encouraging the users to make a purchase at this dealship are the purposes of this sample website.
+					p.
+						Please feel free to contact us if you have any questions about this website. We are really expecting precious opinions regarding online buying process enhancements.
+					br	 
+				.ui.four.wide.column
+					.designer
+						img(src="/images/us/designer.png")
+						.content
+							.header
+								| Stephanie Li
+								a(href="mailto:stephanie88@gmail.com")
+									i.mail.outline.icon
+							.meta UX Designer			
+				.ui.four.wide.column
+					.developer
+						img(src="/images/us/developer.png")
+						.content
+							.header
+								| Di Mo
+								a(href="mailto:dimocareer@gmail.com")
+									i.mail.outline.icon
+							.meta Full Stack Engineer
+		br
+		include ./footer.jade
